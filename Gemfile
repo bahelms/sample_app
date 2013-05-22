@@ -20,6 +20,7 @@ group :test do
   gem 'capybara', '2.1.0.rc1'
   gem 'rb-inotify'
   gem 'libnotify'
+  gem 'factory_girl_rails', '4.2.0'
 end
 
 group :assets do
