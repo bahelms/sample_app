@@ -18,8 +18,22 @@ module SessionsHelper
     end
   end
 
+  def current_user?(user)
+    current_user == user
+  end
+
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+  end
+
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)  # Removes hash key so future signins don't forward here
+  end
+
+  def store_location
+    # Session automatically expires on browser close
+    session[:return_to] = request.url
   end
 end

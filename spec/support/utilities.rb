@@ -20,8 +20,14 @@ RSpec::Matchers.define :have_success_message do |message|
 end
 
 def valid_signup
-  fill_in "Name",         with: "Motherfucker Jones"
-  fill_in "Email",        with: "foo@bar.com"
-  fill_in "Password",     with: "123456"
-  fill_in "Confirmation", with: "123456"
+  fill_in "Name",             with: "Motherfucker Jones"
+  fill_in "Email",            with: "foo@bar.com"
+  fill_in "Password",         with: "123456"
+  fill_in "Confirm Password", with: "123456"
+end
+
+def sign_in(user)
+  visit signin_path
+  valid_signin user
+  cookies[:remember_token] = user.remember_token
 end
