@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :microposts, dependent: :destroy
 	before_save { email.downcase! }
   before_save :create_remember_token  # Looks for that method
   
@@ -11,6 +12,10 @@ class User < ActiveRecord::Base
 	has_secure_password  # Provides #authencate() method
 	validates :password_confirmation, presence: true
 	validates :password, length: { minimum: 6 }  # :presence added by line 8
+
+  def feed
+    Micropost.where("user_id = ?", id)  # ? escapes the id var, avoiding SQL injection
+  end
 
   private
     def create_remember_token
