@@ -100,6 +100,35 @@ aside {
   }
 }
 
+.stats {
+  overflow: auto;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $lightGray;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $blue;
+    }
+    strong {
+      display: block;
+    }
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+}
+
 .gravatar {
   float: left;
   margin-right: 10px;
@@ -138,20 +167,20 @@ footer {
   border-top: 1px solid #eaeaea;
   color: $lightGray;
   a {
-  	color: #555;
-  	&:hover {
-  		color: #222;
-  	}
+    color: #555;
+    &:hover {
+      color: #222;
+    }
   }
   small {
-  	float: left;
+    float: left;
   }
   ul {
-	float: right;
+  float: right;
     list-style: none;
     li {
-    	float: left;
-    	margin-left: 10px;
+      float: left;
+      margin-left: 10px;
     }
   }
 }
