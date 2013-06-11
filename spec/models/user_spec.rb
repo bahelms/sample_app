@@ -208,4 +208,21 @@ describe User do
       its(:followed_users) { should_not include(other_user) }
     end
   end
+
+  describe "relationships" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it "should destroy user relationships" do
+      relationships = @user.relationships.to_a
+      @user.destroy
+      expect(relationships).not_to be_empty
+      relationships.each do |relationship|
+        expect(Relationship.where(id: relationship.id)).to be_empty
+      end
+    end
+  end
 end
