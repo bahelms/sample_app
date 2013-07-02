@@ -7,11 +7,16 @@ class User < ActiveRecord::Base
                                    dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
   # This source is optional; :followers turns into follower_id
+  has_many :replies, foreign_key: "reply_to_id", 
+                     class_name: "Micropost",
+                     dependent: :destroy
 
 	before_save { email.downcase! }
   before_save :create_remember_token  # Looks for that method
   
-	validates :name,  presence: true, length: { maximum: 50 }
+	validates :name,  presence: true, 
+                    length: { maximum: 50 },
+                    uniqueness: { case_sensitive: false }
 	VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  
 	validates :email, presence: true, 
 										format: { with: VALID_EMAIL }, 
@@ -23,7 +28,7 @@ class User < ActiveRecord::Base
 
   def feed
     # Micropost.where("user_id = ?", id)  # ? escapes the id var, avoiding SQL injection
-    Micropost.from_users_followed_by(self)
+    Micropost.from_users_followed_by_including_replies(self)
   end
 
   def following?(other_user)

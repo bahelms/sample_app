@@ -9,6 +9,7 @@ describe Micropost do
   it { should respond_to :content }
   it { should respond_to :user_id }
   it { should respond_to :user }
+  it { should respond_to :reply_to_id }
   its(:user) { should eq user }
   it { should be_valid }
 
@@ -25,5 +26,12 @@ describe Micropost do
   describe "with content that is too long" do
     before { @micropost.content = 'a' * 141 }
     it { should_not be_valid }
+  end
+
+  describe "reply_to_id should be filled when saved" do
+    before do
+      @micropost = user.microposts.create(content: "@#{user.name} lorem")
+    end
+    its(:reply_to_id) { should_not be_nil }
   end
 end
